@@ -23,6 +23,31 @@ It is designed for home, family, small office, or lab use on Ubuntu, Debian, Kal
 
 ---
 
+## Why use Hotspot Manager? (Benefits)
+
+Running your own hotspot with this dashboard gives you practical control that consumer routers often hide behind complex menus—or do not offer at all.
+
+### 1. Monitor connected devices and network traffic
+- See **who is on your Wi-Fi** in real time: device name, MAC address, vendor, signal strength, and a best-guess of the operating system.
+- Watch **DNS-level network activity**: which domains devices are looking up while they use your hotspot.
+- Quickly spot unknown or unexpected devices and take action (kick or block by MAC).
+
+### 2. Block risky or adult websites to help protect children
+- Block individual domains (and their subdomains) so devices on the hotspot cannot open them.
+- Use this to limit access to adult content, known risky sites, or distractions you decide are inappropriate for your home or classroom.
+- Blocking is enforced at the DNS level for devices that use the hotspot’s DNS (the usual case). You can also **block an entire device by MAC** when needed.
+- After changing rules, use **Restart hotspot** in the dashboard so the new blocks take effect.
+
+### 3. Audit visited websites (where technically supported)
+- The **Activity** view shows recent domain lookups from devices on the hotspot.
+- This is **domain-level auditing** (which sites were requested), not the full content of pages.
+- Useful for parents and administrators who want visibility into what is being accessed on their network, within the limits of DNS logging.
+- Only traffic that goes through the hotspot’s DNS is visible. Clients that force their own DNS (or use a VPN) may bypass this; MAC blocking still works for those devices.
+
+**Important:** Always tell people who connect to your hotspot that activity may be monitored or filtered. Use the software only on networks you own or administer, and in line with local law and household policy.
+
+---
+
 ## Features at a glance
 
 | Area | Capability |
