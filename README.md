@@ -3,7 +3,6 @@
 **One-command Wi-Fi hotspot setup, device monitoring, and access control for Linux**
 
 Developed by **Md. Saiful Islam**  
-Email: e2getway@gmail.com  
 Website: [https://edatastyle.com/](https://edatastyle.com/)
 
 ---
@@ -250,5 +249,4 @@ MIT License – see [LICENSE](LICENSE).
 ## Credits
 
 Developed by **Md. Saiful Islam**  
-Email: e2getway@gmail.com  
 Website: https://edatastyle.com/
