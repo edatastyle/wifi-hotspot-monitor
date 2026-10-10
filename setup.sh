@@ -4,12 +4,12 @@
 # Email: e2getway@gmail.com
 # Website: https://edatastyle.com/
 #
-# Single-entry setup & run for Wi-Fi Hotspot resources.
+# Hotspot Manager - single entry point
 # Usage:
 #   sudo ./setup.sh                  # Interactive menu
-#   sudo ./setup.sh basic            # Interactive basic hotspot (scripts/wifi-hotspot.sh)
-#   sudo ./setup.sh loveallah        # Quick LoveAllah profile
-#   sudo ./setup.sh manager [port]   # Full Hotspot Manager dashboard (default port 8080)
+#   sudo ./setup.sh basic            # Interactive custom hotspot
+#   sudo ./setup.sh hotspot          # Configure / start hotspot (default name: LoveAllah)
+#   sudo ./setup.sh manager [port]   # Full dashboard (default port 8080)
 #   sudo ./setup.sh manager --service
 
 set -euo pipefail
@@ -23,21 +23,22 @@ fi
 
 usage() {
     cat <<HELP
-Wi-Fi Hotspot Toolkit
+Hotspot Manager - Wi-Fi Hotspot Monitor and Access Control Dashboard
 Developed by Md. Saiful Islam (https://edatastyle.com/)
 
 Usage: sudo ./setup.sh [command]
 
 Commands:
   (none)              Show interactive menu
-  basic               Create & start a custom hotspot (interactive)
-  loveallah           Start/repair the pre-configured LoveAllah hotspot
-  manager [port]      Install deps + launch full Hotspot Manager dashboard
+  basic               Create a custom hotspot (you choose SSID, password, channel)
+  hotspot             Configure / start hotspot (default name: LoveAllah – changeable)
+  manager [port]      Install deps + launch full dashboard (device monitor, site blocking)
   manager --service   Same, and enable start-at-boot
   help                Show this help
 
 Examples:
   sudo ./setup.sh basic
+  sudo ./setup.sh hotspot
   sudo ./setup.sh manager 8080
   sudo ./setup.sh manager --service
 HELP
@@ -45,13 +46,14 @@ HELP
 
 menu() {
     echo "=========================================="
-    echo "  Wi-Fi Hotspot Toolkit"
+    echo "  Hotspot Manager"
+    echo "  Wi-Fi Monitor & Access Control"
     echo "  by Md. Saiful Islam"
     echo "=========================================="
     echo
-    echo "1) Basic interactive hotspot (SSID/password you choose)"
-    echo "2) LoveAllah quick start / fix"
-    echo "3) Full Hotspot Manager (dashboard + device control)"
+    echo "1) Custom hotspot (choose your own SSID & password)"
+    echo "2) Quick hotspot setup (default name: LoveAllah – you can change it)"
+    echo "3) Full Manager dashboard (devices, blocking, activity)"
     echo "4) Help"
     echo "5) Exit"
     echo
@@ -71,7 +73,9 @@ case "$cmd" in
     "" ) menu ;;
     help|-h|--help) usage ;;
     basic) bash "$ROOT/scripts/wifi-hotspot.sh" ;;
-    loveallah|love|start) bash "$ROOT/scripts/fix-hotspot.sh" ;;
+    hotspot|loveallah|love|start|fix)
+        bash "$ROOT/scripts/fix-hotspot.sh"
+        ;;
     manager|dashboard|full)
         shift || true
         bash "$ROOT/hotspot-manager/run.sh" "$@"

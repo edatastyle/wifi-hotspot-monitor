@@ -4,38 +4,53 @@
 # Email: e2getway@gmail.com
 # Website: https://edatastyle.com/
 #
-# Quick start for a pre-configured "LoveAllah" hotspot profile.
+# Start a previously configured hotspot profile.
+# Uses settings from /etc/hotspot-manager/hotspot.env (created by fix-hotspot.sh).
+# Default SSID: LoveAllah
 
 set -euo pipefail
 
-CON="LoveAllah"
-IFACE="wlan0"
+CONFIG_FILE="/etc/hotspot-manager/hotspot.env"
+DEFAULT_SSID="LoveAllah"
+DEFAULT_IFACE="wlan0"
 
-echo "=== Starting LoveAllah Hotspot ==="
+SSID="$DEFAULT_SSID"
+IFACE="$DEFAULT_IFACE"
+CON="$DEFAULT_SSID"
 
-# Ensure the script is run as root.
+if [[ -f "$CONFIG_FILE" ]]; then
+    # shellcheck disable=SC1090
+    source "$CONFIG_FILE" 2>/dev/null || true
+fi
+
+CON="${CON:-$SSID}"
+
+echo "=== Starting hotspot: $SSID ==="
+
 if [[ "$EUID" -ne 0 ]]; then
-    echo "Please run: sudo ./start-hotspot.sh"
+    echo "Please run: sudo ./scripts/start-hotspot.sh"
     exit 1
 fi
 
-# Enable Wi-Fi radio.
 echo "[1/4] Enabling Wi-Fi..."
 nmcli radio wifi on
 
-# Ensure the Wi-Fi device is available.
-echo "[2/4] Checking Wi-Fi interface..."
+echo "[2/4] Checking Wi-Fi interface ($IFACE)..."
 nmcli device status
 
-# Activate the saved hotspot profile.
+if ! nmcli connection show "$CON" >/dev/null 2>&1; then
+    echo "Profile '$CON' not found."
+    echo "Run:  sudo ./scripts/fix-hotspot.sh   to create or configure it first."
+    exit 1
+fi
+
 echo "[3/4] Activating hotspot..."
 nmcli connection up "$CON" ifname "$IFACE"
 
-# Verify active connections.
 echo
 echo "[4/4] Active connections:"
 nmcli connection show --active
 
 echo
 echo "=== Hotspot started successfully ==="
-echo "SSID: LoveAllah"
+echo "SSID: $SSID"
