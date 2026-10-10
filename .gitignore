@@ -1,0 +1,17 @@
+# Runtime / generated
+hotspot-manager/config.php
+/etc/hotspot-manager/
+/var/lib/hotspot-manager/
+*.log
+*.tmp
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+
+# Python
+__pycache__/
+*.pyc
